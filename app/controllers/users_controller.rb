@@ -15,6 +15,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    @events = Event.find_by(author_id: params[:id])
   end
 
   private
