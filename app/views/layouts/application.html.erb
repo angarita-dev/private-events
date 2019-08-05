@@ -10,6 +10,7 @@
   </head>
 
   <body>
+    <%= "User: " + current_user.name if sign_in? %>
     <%= yield %>
   </body>
 </html>
