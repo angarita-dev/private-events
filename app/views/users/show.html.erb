@@ -1,4 +1,7 @@
 <% @events.each do |event| %>
+  <br>
   <%= event.id %>
-  <%= event.user_id %>
+  <br>
+  <%= event.creator.name %>
+  <hr>
 <% end %>
