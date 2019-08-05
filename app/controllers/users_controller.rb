@@ -4,12 +4,13 @@ class UsersController < ApplicationController
   end
 
   def create
-    puts params
-    if User.create(user_params)
-      puts params
+    user = User.new(user_params)
+    if user.save()
+      sign_in(user)
+      flash[:notice] = "User created succesfully"
       redirect_to root_path
     else
-      flash.now[:warning]
+      flash.now[:warning] = "There has been an error crating your user please try again later"
     end
   end
 
@@ -18,6 +19,6 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:name)
+      params.require(:user).permit(:name,:password,:password_confirmation)
     end
 end

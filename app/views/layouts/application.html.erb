@@ -10,7 +10,10 @@
   </head>
 
   <body>
-    <%= "User: " + current_user.name if sign_in? %>
+    <%= render 'layouts/nav' %>
+    <% flash.each do |key, value| %>
+      <%= content_tag :div, value, class: "flash_#{key}" %>
+    <% end %>
     <%= yield %>
   </body>
 </html>
