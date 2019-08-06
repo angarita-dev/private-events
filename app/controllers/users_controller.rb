@@ -15,6 +15,7 @@ class UsersController < ApplicationController
   end
 
   def show
+    puts Event.where(creator: params[:id])
     @events = Event.where(creator: params[:id])
   end
 
