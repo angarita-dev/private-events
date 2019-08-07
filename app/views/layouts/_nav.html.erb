@@ -1,6 +1,7 @@
 <% if sign_in?%>
-  <%= "User: " + current_user.name%>
-  <%= link_to "Sign out", session_path(current_user.id), method: 'delete'%>
+  <%= link_to "User: #{current_user.name}", current_user %>
+  <%= link_to "Sign out", session_path(current_user.id), method: 'delete' %>
+  <%= link_to "Create event", new_event_path %>
 <% else %>
   <%= link_to "Sign up", new_user_path %>
   <%= link_to "Sign in", new_session_path %>
