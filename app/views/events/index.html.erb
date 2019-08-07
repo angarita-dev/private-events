@@ -1,8 +1,17 @@
-<% @events.each do |event| %>
-  <div>
-    <%= link_to "#{event.title}", event %>
-    <br>
-    <%= link_to "Created by: #{event.creator.name}", event.creator %>
-    <hr>
-  </div>
+<% unless @upcomming_events.nil? %>
+  <h3>Upcomming Events</h3>
+  <% @upcomming_events.each do |event| %>
+    <div>
+      <%= link_to "#{event.title}", event %>
+    </div>
+  <% end %>
+<% end %>
+<% unless @previous_events.nil? %>
+  <h3>Previous Events</h3>
+  <% @previous_events.each do |event| %>
+    <div>
+      <%= link_to "#{event.title}", event %>
+      <hr>
+    </div>
+  <% end %>
 <% end %>

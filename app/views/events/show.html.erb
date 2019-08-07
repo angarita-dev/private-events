@@ -3,6 +3,7 @@
   <br>
   <p><%= @event.description %></p>
   <%= @event.event_date %>
+  <%= link_to "#{@event.creator.name}", @event.creator %>
   <br>
   <% if check_owner(@event) %>
     <br>

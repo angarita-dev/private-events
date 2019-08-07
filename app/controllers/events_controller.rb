@@ -1,7 +1,9 @@
 class EventsController < ApplicationController
 
   def index
-    @events = Event.all
+    date = Date.current
+    @upcomming_events = upcomming_events(date)
+    @previous_events = previous_events(date)
   end
 
   def new
@@ -70,5 +72,13 @@ class EventsController < ApplicationController
 
     def check_owner(event)
       current_user == event.creator
+    end
+
+    def previous_events(date)
+      Event.where("event_date < :current_date", current_date: date)
+    end
+  
+    def upcomming_events(date)
+      Event.where("event_date >= :current_date", current_date: date)
     end
 end
