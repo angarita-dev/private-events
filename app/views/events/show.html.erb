@@ -1,7 +1,9 @@
 <div>
-  <h3><%= @event.title %></h3>
+  <h2><%= @event.title %></h2>
   <br>
   <p><%= @event.description %></p>
+  <%= @event.event_date %>
+  <br>
   <% if check_owner(@event) %>
     <br>
     <%= link_to "Edit event", edit_event_path(@event) %>
@@ -9,8 +11,9 @@
     <%= link_to "Delete event", event_path(@event), method: :delete %>
   <% end %>
   <% unless @event.attendees.empty? %>
+    <h3>Event Attendees</h3>
     <ul>
-      <%  @event.attendees.each do |attendee| %>
+      <% @event.attendees.each do |attendee| %>
         <li><%= link_to "#{attendee.name}", attendee %></li>
       <% end %>
     </ul>

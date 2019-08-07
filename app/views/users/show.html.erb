@@ -1,7 +1,15 @@
 <h1><%= @user.name %></h1>
-<% unless @events.empty? %>
-  <h2>Events</h2>
-  <% @events.each do |event| %>
+<% unless @upcomming_events.nil? %>
+  <h3>Upcomming Events</h3>
+  <% @upcomming_events.each do |event| %>
+    <div>
+      <%= link_to "#{event.title}", event %>
+    </div>
+  <% end %>
+<% end %>
+<% unless @previous_events.nil? %>
+  <h3>Previous Events</h3>
+  <% @previous_events.each do |event| %>
     <div>
       <%= link_to "#{event.title}", event %>
       <hr>
