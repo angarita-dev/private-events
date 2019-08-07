@@ -1,11 +1,18 @@
 <div>
-  <%= @event.title %>
+  <h3><%= @event.title %></h3>
   <br>
-  <%= @event.description %>
+  <p><%= @event.description %></p>
   <% if check_owner(@event) %>
     <br>
     <%= link_to "Edit event", edit_event_path(@event) %>
     <br>
     <%= link_to "Delete event", event_path(@event), method: :delete %>
+  <% end %>
+  <% unless @event.attendees.empty? %>
+    <ul>
+      <%  @event.attendees.each do |attendee| %>
+        <li><%= link_to "#{attendee.name}", attendee %></li>
+      <% end %>
+    </ul>
   <% end %>
 </div>

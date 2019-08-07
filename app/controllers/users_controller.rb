@@ -15,8 +15,8 @@ class UsersController < ApplicationController
   end
 
   def show
-    user = User.find(params[:id])
-    @events = Event.where(creator: user)
+    @user = User.find(params[:id])
+    @events = Event.where(creator: @user)
   end
 
   private
