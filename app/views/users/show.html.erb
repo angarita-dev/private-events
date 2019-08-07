@@ -1,7 +1,18 @@
-<% @events.each do |event| %>
-  <h1><%= @user.name %></h1>
-  <div>
-    <%= link_to "#{event.title}", event %>
-    <hr>
-  </div>
+<h1><%= @user.name %></h1>
+<% unless @events.empty? %>
+  <h2>Events</h2>
+  <% @events.each do |event| %>
+    <div>
+      <%= link_to "#{event.title}", event %>
+      <hr>
+    </div>
+  <% end %>
+<% end %>
+<% unless @user.attended_events.empty? %>
+  <h2>Attending Events</h2>
+  <ul>
+    <% @user.attended_events.each do |event| %>
+      <li><%= link_to "#{event.title}", event %></li>
+    <% end %>
+  </ul>
 <% end %>
