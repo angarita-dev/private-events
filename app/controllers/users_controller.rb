@@ -18,20 +18,12 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @events = Event.where(creator: @user)
     date = Date.current
-    @upcomming_events = upcomming_events(@user, date)
-    @previous_events = previous_events(@user, date)
+    @upcomming_events = @user.created_events.upcomming_events
+    @previous_events = @user.created_events.previous_events
   end
 
   private
   def user_params
     params.require(:user).permit(:name,:password,:password_confirmation)
-  end
-
-  def previous_events(user, date)
-    user.created_events.where("event_date < :current_date", current_date: date)
-  end
-
-  def upcomming_events(user, date)
-    user.created_events.where("event_date >= :current_date", current_date: date)
   end
 end
