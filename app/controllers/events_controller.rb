@@ -63,14 +63,30 @@ class EventsController < ApplicationController
     end
   end
 
-  def attend_to_event
-    user = current_user
-    att = user.atttendances.build(event: @event)
-    if att.save
-      flash.now[:notice] = "Attendace registred correctly"
-    else
-      flash.now[:warning] = "There has been an error registering your attendance, please try again later"
+  def attending_status
+    event = Event.find(params[:id])
+    if current_user.attended_events.find(event.id)
+      puts "I found it"
     end
+  end
+
+  def attend_to_event
+    event = Event.find(params[:id])
+    if current_user.attended_events.find(event.id)
+      puts "I found it"
+      puts current_user.attended_events.find(event.id).title
+    end
+    # event = Event.find(params[:id])
+    # attendance = current_user.attendances.build(attended_event: event)
+    # if attendance.save
+    #   flash[:notice] = "Attendance registered successfuly"
+    # else
+    #   flash[:warning] = "There was a problem while trying to register you to the event"
+    # end
+    redirect_to event
+  end
+  
+  def stop_attending_to_event
   end
 
   private
