@@ -63,6 +63,16 @@ class EventsController < ApplicationController
     end
   end
 
+  def attend_to_event
+    user = current_user
+    att = user.atttendances.build(event: @event)
+    if att.save
+      flash.now[:notice] = "Attendace registred correctly"
+    else
+      flash.now[:warning] = "There has been an error registering your attendance, please try again later"
+    end
+  end
+
   private
     def event_params
       params.require(:event).permit(:title, :description, :event_date)
