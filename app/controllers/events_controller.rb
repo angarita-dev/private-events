@@ -9,7 +9,7 @@ class EventsController < ApplicationController
   end
 
   def create
-    if sign_in? 
+    if sign_in?
       event = current_user.created_events.build(event_params)
       if event.save()
         flash[:notice] = "Event created successfully"

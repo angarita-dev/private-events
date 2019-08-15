@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include SessionsHelper
+  
   def sign_in(user)
     token = generate_token
     user.update_attribute(:remember_token, token)
