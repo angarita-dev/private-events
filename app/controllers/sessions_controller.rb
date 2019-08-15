@@ -10,7 +10,7 @@ class SessionsController < ApplicationController
       flash[:notice] = "You have logged in correctly"
       redirect_to root_path
     else
-      flash[:warning] = "Wrong combination of email/password"
+      flash[:warning] = "Wrong combination of user/password"
       redirect_to new_session_path
     end
   end

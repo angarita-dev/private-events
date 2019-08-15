@@ -63,30 +63,42 @@ class EventsController < ApplicationController
     end
   end
 
-  def attending_status
-    event = Event.find(params[:id])
-    if current_user.attended_events.find(event.id)
-      puts "I found it"
-    end
+  def is_attending?(event)
+    event.attendees.exists? && !event.attendees.find(current_user.id).nil?
   end
 
   def attend_to_event
     event = Event.find(params[:id])
-    if current_user.attended_events.find(event.id)
-      puts "I found it"
-      puts current_user.attended_events.find(event.id).title
+    if sign_in?
+      if is_attending?(event)
+        flash[:warning] = "You are already attending to this event"
+        redirect_to event
+      else
+        current_user.attendances.create(event: event)
+        flash[:notice] = "You are now attending to this event"
+        redirect_to event
+      end
+    else
+      flash[:warning] = "Please log in to attend to this event"
+      redirect_to new_session_path
     end
-    # event = Event.find(params[:id])
-    # attendance = current_user.attendances.build(attended_event: event)
-    # if attendance.save
-    #   flash[:notice] = "Attendance registered successfuly"
-    # else
-    #   flash[:warning] = "There was a problem while trying to register you to the event"
-    # end
-    redirect_to event
   end
   
   def stop_attending_to_event
+    event = Event.find(params[:id])
+    if sign_in?
+      if is_attending?(event)
+        Attendance.find_by(user: current_user, event: event).destroy
+        flash[:notice] = "You are not attending to this event anymore"
+        redirect_to event
+      else
+        flash[:warning] = "You are not attending to this event"
+        redirect_to event
+      end
+    else
+      flash[:warning] = "Please log in to stop attending to this event"
+      redirect_to new_session_path
+    end
   end
 
   private

@@ -11,8 +11,11 @@
     <br>
     <%= link_to "Delete event", event_path(@event), method: :delete %>
   <% else %>
-    <!-- If user is currently attending or not -->
-    <%= link_to 'Attend This Event!', controller: :events, action: :attend_to_event  %>
+    <% if !is_attending?(@event) %>
+      <%= link_to 'Attend This Event!', controller: :events, action: :attend_to_event  %>
+    <% else %>
+      <%= link_to 'Stop attending', controller: :events, action: :stop_attending_to_event  %>
+    <% end %>
   <% end %>
   <% unless @event.attendees.empty? %>
     <h3>Event Attendees</h3>
