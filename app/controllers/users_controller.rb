@@ -10,7 +10,8 @@ class UsersController < ApplicationController
       flash[:notice] = "User created succesfully"
       redirect_to root_path
     else
-      flash.now[:warning] = "There has been an error crating your user please try again later"
+      flash[:warning] = "There has been an error crating your user please try again later"
+      redirect_to new_user_path
     end
   end
 
