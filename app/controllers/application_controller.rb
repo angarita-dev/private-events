@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include SessionsHelper
+  
   def sign_in(user)
     token = generate_token
     user.update_attribute(:remember_token, token)
@@ -6,16 +8,8 @@ class ApplicationController < ActionController::Base
     set_current_user(user)
   end
 
-  def sign_in?
-    !current_user.nil?
-  end
-
   def set_current_user(user)
     @current_user = user
-  end
-
-  def current_user
-    @current_user ||= User.find_by(remember_token: cookies.signed.permanent[:remember_token])
   end
 
   def sign_out
