@@ -9,11 +9,9 @@ class User < ApplicationRecord
 
   has_many :created_events, foreign_key: :creator_id, class_name: :Event, dependent: :destroy
  
-  has_many :attendances, foreign_key: :user_id
-  has_many :attended_events, through: :attendances, 
-                             source: :event,
-                             foreign_key: :user_id,
-                             class_name: :Event
+  has_many :attendances, foreign_key: :event_attendee_id, class_name: :Attendance
+  has_many :attended_events, through: :attendances, source: :event
+  
   private 
   def generate_token
     token = SecureRandom.urlsafe_base64
