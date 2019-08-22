@@ -33,4 +33,13 @@ RSpec.describe User, type: :model do
       expect(user2).to_not be_valid
     end
   end
+
+  context "Events Relationships" do
+    it "Can have multiple events" do
+      user = create(:user)
+      event1 = create(:event, title: "First Event", description: "Event Description", creator_id: user.id)
+      event2 = build(:event, title: "Second Event", description: "Event Description", creator_id: user.id)
+      expect(event2).to be_valid
+    end
+  end
 end
