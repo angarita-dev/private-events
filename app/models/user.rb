@@ -2,7 +2,7 @@ class User < ApplicationRecord
   require 'digest'
   before_create :generate_token
 
-  validates :name, uniqueness: true
+  validates :name, uniqueness: true, presence: true
   validates :password, presence: true, length: { minimum: 6 }
 
   has_secure_password
