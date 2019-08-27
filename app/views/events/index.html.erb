@@ -3,6 +3,8 @@
   <% @upcomming_events.each do |event| %>
     <div>
       <%= link_to "#{event.title}", event %>
+      <br>
+      <br>
     </div>
   <% end %>
 <% end %>
@@ -11,7 +13,8 @@
   <% @previous_events.each do |event| %>
     <div>
       <%= link_to "#{event.title}", event %>
-      <hr>
+      <br>
+      <br>
     </div>
   <% end %>
 <% end %>

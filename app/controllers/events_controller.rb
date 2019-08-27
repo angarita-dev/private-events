@@ -46,6 +46,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    print @event.id
   end
 
   def destroy
@@ -64,7 +65,7 @@ class EventsController < ApplicationController
   end
 
   def attending?(event)
-    event.attendees.exists? && !event.attendees.find(current_user.id).nil?
+    event.attendees.exists? && !current_user.nil? && !event.attendees.find(current_user.id).nil?
   end
 
   def attend_to_event

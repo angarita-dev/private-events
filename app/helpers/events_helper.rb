@@ -6,6 +6,6 @@ module EventsHelper
   end
 
   def attending?(event)
-    event.attendees.exists? && !event.attendees.find(current_user.id).nil?
+    event.attendees.exists? && !current_user.nil? && !event.attendees.find(current_user.id).nil?
   end
 end
