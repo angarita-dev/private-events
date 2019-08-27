@@ -1,6 +1,13 @@
 # frozen_string_literal: true
 
 class EventsController < ApplicationController
+  before_action :set_event, only: %i[edit update show destroy attend_to_event stop_attending_to_event]
+
+  def set_event
+    @event = Event.find(params[:id])
+  end
+
+
   def index
     @upcomming_events = Event.upcomming_events
     @previous_events = Event.previous_events
@@ -25,14 +32,11 @@ class EventsController < ApplicationController
     end
   end
 
-  def edit
-    @event = Event.find(params[:id])
-  end
+  def edit; end
 
   def update
-    event = Event.find(params[:id])
-    if check_owner(event)
-      if event.update(event_params)
+    if check_owner(@event)
+      if @event.update(event_params)
         flash[:notice] = 'Event updated successfully'
       else
         flash.now[:warning] = 'There has been an error updating your user please try again later'
@@ -44,15 +48,11 @@ class EventsController < ApplicationController
     end
   end
 
-  def show
-    @event = Event.find(params[:id])
-    print @event.id
-  end
+  def show; end
 
   def destroy
-    event = Event.find(params[:id])
-    if check_owner(event)
-      if event.destroy
+    if check_owner(@event)
+      if @event.destroy
         flash[:notice] = 'Event deleted successfully'
       else
         flash.now[:warning] = 'There has been an error deleting your event please try again later'
@@ -69,15 +69,14 @@ class EventsController < ApplicationController
   end
 
   def attend_to_event
-    event = Event.find(params[:id])
     if sign_in?
-      if attending?(event)
+      if attending?(@event)
         flash[:warning] = 'You are already attending to this event'
       else
-        current_user.attendances.create(event: event)
+        current_user.attendances.create(event: @event)
         flash[:notice] = 'You are now attending to this event'
       end
-      redirect_to event
+      redirect_to @event
     else
       flash[:warning] = 'Please log in to attend to this event'
       redirect_to new_session_path
@@ -85,15 +84,14 @@ class EventsController < ApplicationController
   end
 
   def stop_attending_to_event
-    event = Event.find(params[:id])
     if sign_in?
-      if attending?(event)
-        Attendance.find_by(user: current_user, event: event).destroy
+      if attending?(@event)
+        Attendance.find_by(user: current_user, event: @event).destroy
         flash[:notice] = 'You are not attending to this event anymore'
       else
         flash[:warning] = 'You are not attending to this event'
       end
-      redirect_to event
+      redirect_to @event
     else
       flash[:warning] = 'Please log in to stop attending to this event'
       redirect_to new_session_path
