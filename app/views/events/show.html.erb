@@ -11,7 +11,7 @@
     <br>
     <%= link_to "Delete event", event_path(@event), method: :delete %>
   <% else %>
-    <% if !is_attending?(@event) %>
+    <% if !attending?(@event) %>
       <%= link_to 'Attend This Event!', controller: :events, action: :attend_to_event  %>
     <% else %>
       <%= link_to 'Stop attending', controller: :events, action: :stop_attending_to_event  %>

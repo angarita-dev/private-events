@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   include SessionsHelper
-  
+
   def sign_in(user)
     token = generate_token
     user.update_attribute(:remember_token, token)
     cookies.signed.permanent[:remember_token] = token
-    set_current_user(user)
+    setup_current_user(user)
   end
 
-  def set_current_user(user)
+  def setup_current_user(user)
     @current_user = user
   end
 
@@ -17,10 +19,11 @@ class ApplicationController < ActionController::Base
     cookies.delete :remember_token
   end
 
- private 
+  private
+
   def generate_token
     token = SecureRandom.urlsafe_base64
     token = Digest::SHA1.hexdigest(token)
-    token = token.to_s
-  end 
+    token.to_s
+  end
 end
