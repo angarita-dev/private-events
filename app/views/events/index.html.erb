@@ -1,0 +1,20 @@
+<% unless @upcomming_events.nil? %>
+  <h3>Upcomming Events</h3>
+  <% @upcomming_events.each do |event| %>
+    <div>
+      <%= link_to "#{event.title}", event %>
+      <br>
+      <br>
+    </div>
+  <% end %>
+<% end %>
+<% unless @previous_events.nil? %>
+  <h3>Previous Events</h3>
+  <% @previous_events.each do |event| %>
+    <div>
+      <%= link_to "#{event.title}", event %>
+      <br>
+      <br>
+    </div>
+  <% end %>
+<% end %>
